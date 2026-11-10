@@ -234,7 +234,7 @@ try {
       await popup.waitForLoadState()
       const url = new URL(popup.url())
       assert.equal(url.hostname, 'wa.me')
-      assert.equal(url.pathname, '/962790000000')
+      assert.equal(url.pathname, '/962791802742')
       const text = url.searchParams.get('text')
       assert.match(text, /أحمد علي/)
       assert.match(text, /\+962 79 000 0000/)

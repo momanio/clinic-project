@@ -59,7 +59,7 @@ export const clinic = {
     closed: { ar: 'الجمعة: عطلة', en: 'Friday: closed' },
   },
   whatsapp: {
-    number: '962790000000',
+    number: '962791802742',
     message: {
       ar: 'مرحبًا، أود الاستفسار عن حجز موعد في عيادتكم.',
       en: 'Hello, I would like to ask about booking an appointment at your clinic.',
