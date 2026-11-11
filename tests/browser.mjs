@@ -88,7 +88,7 @@ try {
     )
     await page.reload()
     await page.locator('h1').waitFor()
-    for (const width of [360, 390, 768, 1024, 1440]) {
+    for (const width of [360, 375, 390, 768, 1024, 1440]) {
       await check(
         `${language} layout at ${width}px: no horizontal overflow, readable content, mirrored controls`,
         async () => {
@@ -438,6 +438,33 @@ try {
       )
     },
   )
+
+  await check('Navigation works without IntersectionObserver', async () => {
+    const fallback = await browser.newContext({ reducedMotion: 'reduce' })
+    await fallback.addInitScript(() => { delete window.IntersectionObserver })
+    const fallbackPage = await fallback.newPage()
+    const errors = []
+    fallbackPage.on('pageerror', (error) => errors.push(error.message))
+    await fallbackPage.goto(origin)
+    await fallbackPage.locator('h1').waitFor()
+    await fallbackPage.setViewportSize({ width: 375, height: 320 })
+    await fallbackPage.locator('.menu-toggle').click()
+    assert.equal(await fallbackPage.locator('.menu-toggle').getAttribute('aria-expanded'), 'true')
+    assert.deepEqual(errors, [])
+    await fallback.close()
+  })
+
+  await check('Short-screen menu remains scrollable and transfers focus to its destination', async () => {
+    await page.emulateMedia({ reducedMotion: 'reduce' })
+    await page.setViewportSize({ width: 768, height: 320 })
+    await page.goto(origin)
+    await page.locator('.menu-toggle').click()
+    const menu = page.locator('#mobile-navigation')
+    assert.ok((await menu.boundingBox()).y + (await menu.boundingBox()).height <= 320)
+    await menu.locator('a[href="#contact"]').click()
+    assert.equal(await page.evaluate(() => document.activeElement.id), 'contact')
+    assert.equal(await page.locator('.menu-toggle').getAttribute('aria-expanded'), 'false')
+  })
 
   await check('No browser runtime errors', async () =>
     assert.deepEqual(runtimeErrors, []),

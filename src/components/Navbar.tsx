@@ -22,6 +22,9 @@ export function Navbar() {
     const onScroll = () => setScrolled(window.scrollY > 16)
     onScroll()
     window.addEventListener('scroll', onScroll, { passive: true })
+    if (!('IntersectionObserver' in window)) {
+      return () => window.removeEventListener('scroll', onScroll)
+    }
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -116,6 +119,9 @@ export function Navbar() {
               onClick={() => {
                 setOpen(false)
                 setActive(link.id)
+                const destination = document.getElementById(link.id)
+                destination?.setAttribute('tabindex', '-1')
+                destination?.focus({ preventScroll: true })
               }}
             >
               {link.label}
