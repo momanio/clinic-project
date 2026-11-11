@@ -23,6 +23,12 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
     document
       .querySelector('meta[name="description"]')
       ?.setAttribute('content', clinic.about[language])
+    for (const selector of ['meta[property="og:title"]', 'meta[name="twitter:title"]']) {
+      document.querySelector(selector)?.setAttribute('content', document.title)
+    }
+    for (const selector of ['meta[property="og:description"]', 'meta[name="twitter:description"]']) {
+      document.querySelector(selector)?.setAttribute('content', clinic.about[language])
+    }
     try {
       localStorage.setItem('nawa-language', language)
     } catch {

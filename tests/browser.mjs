@@ -154,6 +154,8 @@ try {
       await page.getByRole('button', { name: 'Switch to English' }).click()
       assert.match(await page.locator('h1').innerText(), /A little more care/)
       assert.match(await page.title(), /Nawa/)
+      assert.equal(await page.locator('meta[property="og:title"]').getAttribute('content'), await page.title())
+      assert.equal(await page.locator('meta[name="twitter:description"]').getAttribute('content'), await page.locator('meta[name="description"]').getAttribute('content'))
       assert.equal(
         await page.evaluate(() => localStorage.getItem('nawa-language')),
         'en',
