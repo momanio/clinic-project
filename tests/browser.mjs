@@ -88,7 +88,7 @@ try {
     )
     await page.reload()
     await page.locator('h1').waitFor()
-    for (const width of [360, 390, 768, 1024, 1440]) {
+    for (const width of [360, 375, 390, 768, 1024, 1440]) {
       await check(
         `${language} layout at ${width}px: no horizontal overflow, readable content, mirrored controls`,
         async () => {
@@ -125,6 +125,14 @@ try {
               ? layout.floating.x < width / 2
               : layout.floating.x > width / 2,
           )
+          const overlaps = await page.evaluate(() => {
+            const panel = document.querySelector('.illustration-panel').getBoundingClientRect()
+            return [...document.querySelectorAll('.hero-visual .floating-card')].some((card) => {
+              const rect = card.getBoundingClientRect()
+              return rect.top < panel.bottom && rect.bottom > panel.top && rect.left < panel.right && rect.right > panel.left
+            })
+          })
+          assert.equal(overlaps, false, 'Hero badges obscure the illustration or its copy')
           await page.screenshot({
             path: `${artifacts}/${language}-${width}.png`,
             fullPage: true,
@@ -146,6 +154,8 @@ try {
       await page.getByRole('button', { name: 'Switch to English' }).click()
       assert.match(await page.locator('h1').innerText(), /A little more care/)
       assert.match(await page.title(), /Nawa/)
+      assert.equal(await page.locator('meta[property="og:title"]').getAttribute('content'), await page.title())
+      assert.equal(await page.locator('meta[name="twitter:description"]').getAttribute('content'), await page.locator('meta[name="description"]').getAttribute('content'))
       assert.equal(
         await page.evaluate(() => localStorage.getItem('nawa-language')),
         'en',
@@ -438,6 +448,33 @@ try {
       )
     },
   )
+
+  await check('Navigation works without IntersectionObserver', async () => {
+    const fallback = await browser.newContext({ reducedMotion: 'reduce' })
+    await fallback.addInitScript(() => { delete window.IntersectionObserver })
+    const fallbackPage = await fallback.newPage()
+    const errors = []
+    fallbackPage.on('pageerror', (error) => errors.push(error.message))
+    await fallbackPage.goto(origin)
+    await fallbackPage.locator('h1').waitFor()
+    await fallbackPage.setViewportSize({ width: 375, height: 320 })
+    await fallbackPage.locator('.menu-toggle').click()
+    assert.equal(await fallbackPage.locator('.menu-toggle').getAttribute('aria-expanded'), 'true')
+    assert.deepEqual(errors, [])
+    await fallback.close()
+  })
+
+  await check('Short-screen menu remains scrollable and transfers focus to its destination', async () => {
+    await page.emulateMedia({ reducedMotion: 'reduce' })
+    await page.setViewportSize({ width: 768, height: 320 })
+    await page.goto(origin)
+    await page.locator('.menu-toggle').click()
+    const menu = page.locator('#mobile-navigation')
+    assert.ok((await menu.boundingBox()).y + (await menu.boundingBox()).height <= 320)
+    await menu.locator('a[href="#contact"]').click()
+    assert.equal(await page.evaluate(() => document.activeElement.id), 'contact')
+    assert.equal(await page.locator('.menu-toggle').getAttribute('aria-expanded'), 'false')
+  })
 
   await check('No browser runtime errors', async () =>
     assert.deepEqual(runtimeErrors, []),

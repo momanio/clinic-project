@@ -1255,6 +1255,7 @@
     display: grid;
     place-items: center;
     inline-size: 44px;
+    min-inline-size: 44px;
     block-size: 44px;
     margin-inline-start: 1rem;
     color: var(--color-primary);
@@ -1438,6 +1439,7 @@
     opacity 0.7s ease,
     translate 0.7s cubic-bezier(0.16, 1, 0.3, 1);
 }
+.reveal-ready:focus-within,
 .reveal-ready.is-visible {
   opacity: 1;
   translate: 0 0;
@@ -1527,6 +1529,9 @@
   .mobile-menu {
     display: grid;
     grid-template-rows: 0fr;
+    max-block-size: calc(100dvh - 84px);
+    overflow-y: auto;
+    overscroll-behavior: contain;
     opacity: 0;
     visibility: hidden;
     transition:
@@ -2260,5 +2265,44 @@
   }
   .about-art-caption .about-art-title {
     font-size: 1.15rem;
+  }
+}
+
+/* Give the illustration and reassurance copy their own space. */
+.hero-visual {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.75rem;
+}
+.illustration-panel {
+  grid-column: 1 / -1;
+}
+.hero-visual .floating-card {
+  position: relative;
+  inset: auto;
+  transform: none;
+  min-inline-size: 0;
+  padding: 0.85rem;
+  gap: 0.6rem;
+  align-items: flex-start;
+  border-color: var(--color-line);
+  background: var(--color-ivory);
+  box-shadow: 0 6px 20px #294a3408;
+}
+.hero-visual .floating-card > div {
+  min-inline-size: 0;
+  overflow-wrap: anywhere;
+}
+.hero-visual .card-sparkle,
+.hero-visual .card-check {
+  display: none;
+}
+.site-footer .footer-column > h2 {
+  font-size: 0.85rem;
+}
+@media (max-width: 1199px) {
+  .hero-visual .floating-card {
+    grid-column: 1 / -1;
+    align-items: center;
   }
 }
