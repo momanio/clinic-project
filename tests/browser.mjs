@@ -125,6 +125,14 @@ try {
               ? layout.floating.x < width / 2
               : layout.floating.x > width / 2,
           )
+          const overlaps = await page.evaluate(() => {
+            const panel = document.querySelector('.illustration-panel').getBoundingClientRect()
+            return [...document.querySelectorAll('.hero-visual .floating-card')].some((card) => {
+              const rect = card.getBoundingClientRect()
+              return rect.top < panel.bottom && rect.bottom > panel.top && rect.left < panel.right && rect.right > panel.left
+            })
+          })
+          assert.equal(overlaps, false, 'Hero badges obscure the illustration or its copy')
           await page.screenshot({
             path: `${artifacts}/${language}-${width}.png`,
             fullPage: true,
