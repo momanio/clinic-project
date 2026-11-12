@@ -46,3 +46,20 @@ Checks cover both languages at 360, 390, 768, 1024, and 1440 pixels, direction a
 - `DESIGN_NOTES.md`: five research references and the original visual direction.
 
 The page uses original inline SVG/CSS artwork. Google Fonts supply Cairo and Plus Jakarta Sans with local fallbacks. The Google Maps iframe loads lazily and needs an internet connection; directions remain accessible through a separate link.
+
+## Cloudflare Workers Builds
+
+`wrangler.jsonc` serves the Vite output in `dist/` as a static-assets Worker named `clinic-project`, with SPA fallback routing. Build before deploying:
+
+```sh
+npm run build
+npx wrangler preview
+```
+
+The empty top-level `previews` block enables the existing Cloudflare preview command. Assets and compatibility settings stay at the top level and apply to previews too. Cloudflare supplies deployment credentials in its build environment. The configuration was validated with Wrangler 4.161.0, the version used by the failed build; previews require Wrangler 4.135.0 or newer.
+
+For a local check that does not deploy:
+
+```sh
+npx wrangler@4.161.0 deploy --dry-run
+```

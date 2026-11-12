@@ -28,3 +28,6 @@ test-results/
 
 # Local task scratch files
 work/
+
+# Wrangler local state
+.wrangler/
