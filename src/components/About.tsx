@@ -31,7 +31,7 @@ export function About() {
               <span>{clinic.wordmark}</span>
               <Sprout size={23} strokeWidth={1.4} aria-hidden="true" />
             </div>
-            <div className="care-orbits" aria-hidden="true">
+            <div className="care-orbits" data-depth="0.075" aria-hidden="true">
               <div className="orbit-ring ring-one" />
               <div className="orbit-ring ring-two" />
               <div className="orbit-ring ring-three" />
