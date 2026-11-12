@@ -1,3 +1,4 @@
+import { useActiveStep } from '../hooks/useActiveStep'
 import { ArrowUpRight, MessageCircle } from 'lucide-react'
 import { clinic, getWhatsAppUrl } from '../data/clinic'
 import { useLanguage } from '../i18n/useLanguage'
@@ -5,14 +6,16 @@ import { SectionLabel } from './SectionHeading'
 
 export function Services() {
   const { language, t } = useLanguage()
+  const active = useActiveStep()
   return (
     <section
       id="services"
       className="section-pad section-anchor services-section"
       aria-labelledby="services-heading"
     >
-      <div className="container">
-        <div className="section-heading-row" data-reveal>
+      <div className="section-orb" data-depth="-0.07" aria-hidden="true" />
+      <div className="container services-story">
+        <div className="section-heading-row services-sticky">
           <div>
             <SectionLabel number="02">{t.servicesEyebrow}</SectionLabel>
             <h2 id="services-heading">
@@ -21,6 +24,11 @@ export function Services() {
             </h2>
           </div>
           <p className="section-intro">{t.servicesDescription}</p>
+          <div className="story-orbit" aria-hidden="true">
+            <span className="story-core">{String(active + 1).padStart(2, '0')}</span>
+            {clinic.services.map((service, index) => <span key={service.id} className={`story-dot ${index <= active ? 'is-active' : ''}`} style={{ rotate: `${index * 60}deg` }} />)}
+          </div>
+          <div className="story-progress" aria-hidden="true">{clinic.services.map((service, index) => <span key={service.id} className={index <= active ? 'is-active' : ''} />)}</div>
         </div>
         <div className="services-grid">
           {clinic.services.map(
@@ -28,8 +36,8 @@ export function Services() {
               <article
                 key={id}
                 className="service-card"
+                data-service={index}
                 data-reveal
-                style={{ transitionDelay: `${(index % 3) * 60}ms` }}
               >
                 <div className="service-top">
                   <span className="service-icon">

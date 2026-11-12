@@ -54,7 +54,7 @@ try {
   }
   assert.ok(ready, `Vite failed to start: ${serverOutput}`)
   await mkdir(artifacts, { recursive: true })
-  browser = await chromium.launch({ headless: true })
+  browser = await chromium.launch({ headless: true, executablePath: process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH || undefined })
   const context = await browser.newContext({ reducedMotion: 'reduce' })
   const page = await context.newPage()
   const runtimeErrors = []

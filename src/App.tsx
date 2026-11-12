@@ -1,3 +1,4 @@
+import { useParallax } from './hooks/useParallax'
 import { useEffect } from 'react'
 import { clinic } from './data/clinic'
 import { useLanguage } from './i18n/useLanguage'
@@ -14,6 +15,7 @@ import { WhatsAppButton } from './components/WhatsAppButton'
 export default function App() {
   const { t } = useLanguage()
   useScrollReveal()
+  useParallax()
 
   useEffect(() => {
     const root = document.documentElement

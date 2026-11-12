@@ -9,6 +9,7 @@ import {
 import { clinic, getWhatsAppUrl } from '../data/clinic'
 import { useLanguage } from '../i18n/useLanguage'
 import { ClinicIllustration } from './ClinicIllustration'
+import { AnimatedStat } from './AnimatedStat'
 import { WhatsAppIcon } from './WhatsAppIcon'
 
 export function Hero() {
@@ -20,8 +21,11 @@ export function Hero() {
       className="hero section-anchor"
       aria-labelledby="hero-heading"
     >
+      <div className="hero-mesh" data-depth="0.08" aria-hidden="true" />
+      <div className="hero-seed seed-one" data-depth="-0.12" aria-hidden="true" />
+      <div className="hero-seed seed-two" data-depth="0.2" aria-hidden="true" />
       <div className="container hero-grid">
-        <div className="hero-copy entrance">
+        <div className="hero-copy" data-depth="-0.025">
           <div className="eyebrow">
             <span className="status-dot" />
             {t.heroEyebrow}
@@ -74,21 +78,18 @@ export function Hero() {
           <div className="hero-stats">
             {clinic.stats.map((stat, index) => (
               <div className="stat" key={stat.id}>
-                <strong>{stat.value[language]}</strong>
+                <AnimatedStat value={stat.value[language]} />
                 <span>{statLabels[index]}</span>
               </div>
             ))}
           </div>
           <p className="demo-stat-note">{t.demoStats}</p>
         </div>
-        <div
-          className="hero-visual entrance"
-          style={{ animationDelay: '130ms' }}
-        >
+        <div className="hero-visual">
           <div className="visual-orbit orbit-one" />
           <div className="visual-orbit orbit-two" />
           <div className="visual-dot-grid" aria-hidden="true" />
-          <div className="illustration-panel">
+          <div className="illustration-panel" data-depth="0.07">
             <div className="visual-overline">
               <span className="tiny-cross" aria-hidden="true">
                 ✦
@@ -106,7 +107,7 @@ export function Hero() {
               <ArrowUpRight size={21} className="directional" />
             </span>
           </div>
-          <div className="floating-card care-card">
+          <div className="floating-card care-card" data-depth="-0.09">
             <span className="icon-box warm">
               <Heart size={23} aria-hidden="true" />
             </span>
@@ -116,7 +117,7 @@ export function Hero() {
             </div>
             <Sparkles className="card-sparkle" size={17} aria-hidden="true" />
           </div>
-          <div className="floating-card appointment-card">
+          <div className="floating-card appointment-card" data-depth="0.12">
             <span className="icon-box">
               <CalendarDays size={22} aria-hidden="true" />
             </span>
