@@ -88,7 +88,7 @@ try {
     )
     await page.reload()
     await page.locator('h1').waitFor()
-    for (const width of [360, 375, 390, 768, 1024, 1440]) {
+    for (const width of [320, 360, 375, 390, 768, 1024, 1440, 1920]) {
       await check(
         `${language} layout at ${width}px: no horizontal overflow, readable content, mirrored controls`,
         async () => {
@@ -474,6 +474,24 @@ try {
     await menu.locator('a[href="#contact"]').click()
     assert.equal(await page.evaluate(() => document.activeElement.id), 'contact')
     assert.equal(await page.locator('.menu-toggle').getAttribute('aria-expanded'), 'false')
+  })
+
+  await check('Scene responds to scroll and honors reduced motion changed at runtime', async () => {
+    await page.emulateMedia({ reducedMotion: 'no-preference' })
+    await page.setViewportSize({ width: 1440, height: 1000 })
+    await page.goto(origin)
+    await page.evaluate(() => window.scrollTo(0, 0))
+    await delay(150)
+    const orb = page.locator('.orb-sage')
+    const before = await orb.evaluate((element) => element.style.transform)
+    await page.evaluate(() => window.scrollTo(0, 250))
+    await delay(150)
+    assert.notEqual(await orb.evaluate((element) => element.style.transform), before)
+    assert.equal(await page.locator('.services-section .section-heading-row').evaluate((element) => getComputedStyle(element).position), 'sticky')
+    await page.emulateMedia({ reducedMotion: 'reduce' })
+    await delay(100)
+    assert.equal(await orb.evaluate((element) => getComputedStyle(element).transform), 'none')
+    assert.equal(await page.locator('.services-section .section-heading-row').evaluate((element) => getComputedStyle(element).position), 'static')
   })
 
   await check('No browser runtime errors', async () =>

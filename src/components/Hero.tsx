@@ -8,6 +8,7 @@ import {
 } from 'lucide-react'
 import { clinic, getWhatsAppUrl } from '../data/clinic'
 import { useLanguage } from '../i18n/useLanguage'
+import { AnimatedStat } from './AnimatedStat'
 import { ClinicIllustration } from './ClinicIllustration'
 import { WhatsAppIcon } from './WhatsAppIcon'
 
@@ -20,8 +21,13 @@ export function Hero() {
       className="hero section-anchor"
       aria-labelledby="hero-heading"
     >
+      <div className="hero-atmosphere" aria-hidden="true">
+        <div className="scene-orb orb-sage" data-depth="0.18" />
+        <div className="scene-orb orb-sand" data-depth="-0.12" />
+        <div className="scene-orbit" data-depth="0.09" />
+      </div>
       <div className="container hero-grid">
-        <div className="hero-copy entrance">
+        <div className="hero-copy entrance" data-depth="0.025">
           <div className="eyebrow">
             <span className="status-dot" />
             {t.heroEyebrow}
@@ -74,7 +80,7 @@ export function Hero() {
           <div className="hero-stats">
             {clinic.stats.map((stat, index) => (
               <div className="stat" key={stat.id}>
-                <strong>{stat.value[language]}</strong>
+                <AnimatedStat value={stat.value[language]} language={language} />
                 <span>{statLabels[index]}</span>
               </div>
             ))}
@@ -97,7 +103,7 @@ export function Hero() {
                 {clinic.wordmark} / {clinic.tagline[language]}
               </span>
             </div>
-            <ClinicIllustration />
+            <div data-depth="-0.065"><ClinicIllustration /></div>
             <div className="visual-caption">
               <strong>{t.visualTitle}</strong>
               <span>{t.visualDescription}</span>
@@ -106,7 +112,7 @@ export function Hero() {
               <ArrowUpRight size={21} className="directional" />
             </span>
           </div>
-          <div className="floating-card care-card">
+          <div className="floating-card care-card" data-depth="0.045">
             <span className="icon-box warm">
               <Heart size={23} aria-hidden="true" />
             </span>
@@ -116,7 +122,7 @@ export function Hero() {
             </div>
             <Sparkles className="card-sparkle" size={17} aria-hidden="true" />
           </div>
-          <div className="floating-card appointment-card">
+          <div className="floating-card appointment-card" data-depth="-0.045">
             <span className="icon-box">
               <CalendarDays size={22} aria-hidden="true" />
             </span>

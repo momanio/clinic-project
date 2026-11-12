@@ -1,6 +1,7 @@
 import { useEffect } from 'react'
 import { clinic } from './data/clinic'
 import { useLanguage } from './i18n/useLanguage'
+import { useSceneMotion } from './hooks/useSceneMotion'
 import { useScrollReveal } from './hooks/useScrollReveal'
 import { Navbar } from './components/Navbar'
 import { Hero } from './components/Hero'
@@ -14,6 +15,7 @@ import { WhatsAppButton } from './components/WhatsAppButton'
 export default function App() {
   const { t } = useLanguage()
   useScrollReveal()
+  useSceneMotion()
 
   useEffect(() => {
     const root = document.documentElement

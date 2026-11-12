@@ -1,0 +1,108 @@
+/* Scene tokens extend the existing brand without changing its source of truth. */
+:root {
+  --surface-cream: #f8f5ed;
+  --surface-sand: #eee5d5;
+  --surface-sage: #e4ebdf;
+  --accent-clay: #a36948;
+  --space-scene: clamp(4.5rem, 8vw, 8rem);
+  --radius-scene: 3rem;
+  --shadow-soft: 0 24px 65px #184d4310;
+  --shadow-lift: 0 30px 65px #184d4320;
+  --ease-scene: cubic-bezier(0.16, 1, 0.3, 1);
+}
+html { background: #fcfbf7; }
+.section-pad { padding-block: var(--space-scene); }
+.site-header { background: #fcfbf7df; backdrop-filter: blur(18px); }
+.site-header.is-scrolled { background: #fcfbf7ee; box-shadow: var(--shadow-soft); }
+.site-header.is-scrolled .brand-symbol { transform: scale(0.88); }
+.brand-symbol { transition: transform 0.35s var(--ease-scene); }
+.site-header.is-scrolled .nav-inner { min-block-size: 78px; }
+.hero { padding-block-start: 3.5rem; background: var(--surface-cream); }
+.hero::before { display: none; }
+.hero-atmosphere { position: absolute; inset: 0; z-index: -1; overflow: clip; pointer-events: none; }
+.scene-orb { position: absolute; border-radius: 50%; }
+.orb-sage { inline-size: 65vw; block-size: 65vw; inset-inline-end: -18%; inset-block-start: -30%; background: radial-gradient(circle, #d7e3cd 0%, #e4ebdf88 40%, transparent 70%); }
+.orb-sand { inline-size: 50vw; block-size: 50vw; inset-inline-start: -20%; inset-block-end: -35%; background: radial-gradient(circle, #edbc9144, transparent 70%); }
+.scene-orbit { position: absolute; inline-size: 70vw; block-size: 70vw; border: 1px solid #184d4310; border-radius: 50%; inset-inline-end: -22%; inset-block-start: -10%; }
+.scene-orbit::before, .scene-orbit::after { content: ''; position: absolute; inset: 8%; border: inherit; border-radius: inherit; }
+.scene-orbit::after { inset: 18%; }
+.hero-grid { gap: 5rem; padding-block-end: 2rem; }
+h1 { font-size: clamp(3rem, 4.9vw, 4.5rem); line-height: 1.5; letter-spacing: -0.055em; }
+.hero-description { font-size: 1.05rem; }
+.hero-visual { gap: 1rem; }
+.illustration-panel { border-radius: 48% 48% 2rem 2rem; background: linear-gradient(145deg, #e7eddd, #d7e2ce); border-color: #cdd9c3; box-shadow: var(--shadow-soft); }
+.hero-visual .floating-card { background: #fffdf7ee; border-radius: 1.25rem; box-shadow: var(--shadow-soft); }
+.visual-orbit { border-color: #b4c4a566; }
+.visual-overline { color: #38513d; }
+.hero-stats { border-color: #184d4325; }
+.stat strong { font-weight: 500; font-size: 2.1rem; font-variant-numeric: tabular-nums; }
+.care-principles { margin-block-start: 2rem; border-block: 0; padding-block: 2rem; }
+.hero > .container:last-child { background: #e4ebdf80; border-block-start: 1px solid #184d4312; inline-size: 100%; padding-inline: max(1.25rem, calc((100% - 1200px) / 2)); }
+.about-section { position: relative; }
+.about-art { background: #eee5d5; border-radius: 46% 46% 2rem 2rem; padding-block-start: 2.5rem; box-shadow: var(--shadow-soft); }
+.about-art-caption p:last-child { color: #4e6048; }
+.values-grid { gap: 1rem; }
+.value-card { border-radius: 1.5rem; background: var(--surface-cream); }
+.value-icon { border-radius: 50%; }
+h2 { font-size: clamp(2.1rem, 3.3vw, 3rem); }
+.services-section { position: relative; background: #e8eee3; border-radius: var(--radius-scene) var(--radius-scene) 0 0; border: 0; }
+.service-card { position: relative; border-radius: 1.75rem; padding: 2rem; box-shadow: 0 8px 30px #184d4305; }
+.service-card::before { content: ''; position: absolute; inset: 0; border-radius: inherit; box-shadow: var(--shadow-lift); opacity: 0; pointer-events: none; transition: opacity 0.35s; }
+.service-card:hover::before, .service-card:focus-within::before { opacity: 1; }
+.service-card:hover, .service-card:focus-within { box-shadow: none; transform: translateY(-6px); }
+.service-icon { border-radius: 50%; inline-size: 70px; block-size: 70px; }
+.service-number { font-size: 1rem; color: #576c53; }
+.service-card h3 { font-size: 1.3rem; }
+.service-card > p { font-size: 0.9rem; }
+.service-link { font-size: 0.8rem; }
+.service-arrow { background: var(--surface-sage); border: 0; inline-size: 40px; block-size: 40px; transition: transform 0.3s; }
+.service-link:hover .service-arrow { transform: rotate(-12deg); }
+[dir='rtl'] .service-link:hover .service-arrow { transform: rotate(12deg); }
+.contact-section { background: var(--surface-cream); }
+.contact-form-wrap { box-shadow: var(--shadow-soft); border-radius: 2rem; }
+.contact-detail { background: #f0eee4; }
+.map-wrap { box-shadow: var(--shadow-soft); }
+.site-footer { border-radius: var(--radius-scene) var(--radius-scene) 0 0; }
+.button-primary { position: relative; isolation: isolate; overflow: hidden; }
+.button-primary::before { content: ''; position: absolute; z-index: -1; inset: -50%; background: linear-gradient(110deg, transparent 35%, #ffffff25 50%, transparent 65%); transform: translateX(100%); transition: transform 0.65s var(--ease-scene); }
+.button-primary:hover::before, .button-primary:focus-visible::before { transform: translateX(-100%); }
+.reveal-ready { scale: 0.975; transition: opacity 0.8s ease, translate 0.8s var(--ease-scene), scale 0.8s var(--ease-scene); }
+.reveal-ready.is-visible, .reveal-ready:focus-within { scale: 1; }
+@media (min-width: 1024px) {
+  /* A native sticky chapter beside six sequential service cards. */
+  .services-section > .container { display: grid; grid-template-columns: 0.85fr 1.5fr; column-gap: 5rem; align-items: start; }
+  .services-section .section-heading-row { display: block; position: sticky; inset-block-start: 120px; margin: 0; }
+  .services-section .section-intro { margin-block-start: 1.5rem; }
+  .services-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.5rem; }
+  .service-card:nth-child(even) { margin-block-start: 3rem; }
+  .services-footnote { grid-column: 2; }
+  .services-section .section-heading-row::after { content: ''; display: block; inline-size: 180px; block-size: 180px; margin-block-start: 2.5rem; border-radius: 50%; border: 1px solid #184d4320; background: radial-gradient(circle, #184d43 0 7%, transparent 7.5% 32%, #184d4310 32.5% 33%, transparent 33.5% 55%, #184d4315 55.5% 56%, transparent 56.5%); }
+}
+@media (max-width: 1023px) {
+  .hero-grid { gap: 2rem; }
+  h1 { font-size: 2.8rem; }
+  .service-card { padding: 1.5rem; }
+}
+@media (max-width: 767px) {
+  :root { --radius-scene: 2rem; }
+  .hero { padding-block-start: 2rem; }
+  .hero-grid { gap: 1.7rem; padding-block-end: 1rem; }
+  h1 { font-size: clamp(2.4rem, 10vw, 3.4rem); }
+  .hero-description { font-size: 0.95rem; }
+  .orb-sage { inline-size: 130vw; block-size: 130vw; inset-block-start: 20%; }
+  .orb-sand { inline-size: 100vw; block-size: 100vw; }
+  .scene-orbit { inline-size: 140vw; block-size: 140vw; inset-block-start: 30%; }
+  .hero-visual .floating-card { grid-column: 1 / -1; }
+  .stat strong { font-size: 1.8rem; }
+  .service-card h3 { font-size: 1.2rem; }
+  .about-art { border-radius: 2rem; }
+  .site-header.is-scrolled .nav-inner { min-block-size: 78px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  [data-depth] { transform: none !important; }
+  .reveal-ready { scale: 1; }
+  .service-card:hover, .button:hover { transform: none; }
+  .services-section .section-heading-row { position: static; }
+}
+.services-section .section-intro,
+.services-footnote { color: #52654e; }
